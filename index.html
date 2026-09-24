@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="ferikart — Chalti firti dukan. Premium bedsheets, curtains, cushion covers, and home furnishings delivered to your door.">
+  <title>fericart - Premium bedsheets, Curtains & Home Furnishings</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+  <!-- ═══════════ NAVBAR ═══════════ -->
+  <nav class="navbar" id="navbar">
+    <a href="home.html" class="navbar__logo" aria-label="ferikart Home">
+      <img src="images/logo.png" alt="ferikart logo" class="navbar__logo-img" />
+    </a>
+
+
+
+    <div class="navbar__actions" id="navActions">
+      <!-- Profile -->
+      <div class="profile" id="profileTrigger" role="button" tabindex="0" aria-haspopup="true" aria-expanded="false">
+        <div class="profile__avatar" id="profileAvatar">S</div>
+        <div class="profile__info">
+          <span class="profile__greeting">Hello,</span>
+          <span class="profile__name" id="profileName">Account <span class="profile__name-arrow">▾</span></span>
+        </div>
+        <div class="profile__dropdown" id="profileDropdown" role="menu">
+          <div class="profile__dropdown-header">
+            <div class="profile__dropdown-header-name" id="dropdownName">Account</div>
+            <div class="profile__dropdown-header-email" id="dropdownEmail">Not logged in</div>
+          </div>
+          <a href="account-settings.html" class="profile__dropdown-item" id="accountSettingsBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <circle cx="12" cy="12" r="3" />
+              <path
+                d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z" />
+            </svg>
+            Account Settings
+          </a>
+          <a href="my-orders.html" class="profile__dropdown-item" id="myOrdersBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <path d="M16 10a4 4 0 01-8 0" />
+            </svg>
+            My Orders
+          </a>
+          <a href="wishlist.html" class="profile__dropdown-item" id="wishlistBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path
+                d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" />
+            </svg>
+            Wishlist
+          </a>
+          <a href="admin.html" class="profile__dropdown-item" id="adminPanelBtn" style="display: none;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>
+            Admin Panel
+          </a>
+          <div class="profile__dropdown-divider"></div>
+          <a href="login.html" class="profile__dropdown-item" id="logoutBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" />
+              <polyline points="16 17 21 12 16 7" />
+              <line x1="21" y1="12" x2="9" y2="12" />
+            </svg>
+            Sign Out
+          </a>
+        </div>
+      </div>
+
+      <!-- Cart -->
+      <button class="cart-btn" id="cartBtn" aria-label="Shopping cart">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <circle cx="9" cy="21" r="1" />
+          <circle cx="20" cy="21" r="1" />
+          <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6" />
+        </svg>
+        <span class="cart-btn__badge" id="cartBadge">0</span>
+        <span class="cart-btn__label">Cart</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ═══════════ SEARCH BAR ═══════════ -->
+  <div class="search-bar">
+    <form class="search-bar__form" id="searchForm" role="search" style="position: relative;">
+      <input type="text" class="search-bar__input" id="searchInput"
+        placeholder="Search bedsheets, curtains, cushion covers..." autocomplete="off" />
+      <button type="submit" class="search-bar__btn" aria-label="Search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+          stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8" />
+          <line x1="21" y1="21" x2="16.65" y2="16.65" />
+        </svg>
+      </button>
+      <div class="search-results-dropdown" id="searchResultsDropdown"></div>
+    </form>
+  </div>
+
+  <!-- ═══════════ CATEGORY NAV ═══════════ -->
+  <div class="category-nav">
+    <a href="home.html" class="category-nav__item category-nav__item--active">All</a>
+    <a href="category.html?cat=bedsheets" class="category-nav__item">Bedsheets</a>
+    <a href="category.html?cat=curtains" class="category-nav__item">Curtains</a>
+    <a href="category.html?cat=cushion-covers" class="category-nav__item">Cushion Covers</a>
+    <a href="category.html?cat=pillow-covers" class="category-nav__item">Pillow Covers</a>
+    <a href="category.html?cat=comforters" class="category-nav__item">Comforters</a>
+    <a href="category.html?cat=table-linen" class="category-nav__item">Table Linen</a>
+    <a href="category.html?cat=throws" class="category-nav__item">Throws & Blankets</a>
+    <a href="category.html?cat=mattress-protectors" class="category-nav__item">Mattress Protectors</a>
+    <a href="category.html?cat=bath-towels" class="category-nav__item">Bath Towels</a>
+  </div>
+
+
+  <!-- ═══════════ MAIN CONTENT ═══════════ -->
+  <main class="home-page">
+
+    <!-- Hero -->
+    <section class="hero-banner">
+      <div class="hero-banner__pattern"></div>
+      <div class="hero-banner__inner">
+        <span class="hero-banner__tag">✦ Monsoon Collection 2026</span>
+        <h1 class="hero-banner__title">Transform Your Home<br>with <em>Premium Fabrics</em></h1>
+        <p class="hero-banner__subtitle">Handcrafted bedsheets, elegant curtains, and cozy furnishings — designed for
+          comfort, made for style.</p>
+        <a href="#products" class="hero-banner__cta">Explore Collection →</a>
+      </div>
+    </section>
+
+    <!-- Shop by Category -->
+    <section class="section">
+      <div class="section__header">
+        <h2 class="section__title">Shop by Category</h2>
+        <a href="#" class="section__see-all">View all</a>
+      </div>
+      <div class="category-scroll">
+        <a href="category.html?cat=bedsheets" class="cat-card">
+          <div class="cat-card__icon"><img src="https://res.cloudinary.com/drukqssjb/image/upload/v1785406839/lucid-origin_create_a_bedsheet_best_arreanged_image_for_my_website_category_option_image-0_wdf00j.jpg" alt="Bedsheets" class="cat-card__img" /></div>
+          <div class="cat-card__label">Bedsheets</div>
+        </a>
+        <a href="category.html?cat=curtains" class="cat-card">
+          <div class="cat-card__icon"><img src="https://res.cloudinary.com/drukqssjb/image/upload/v1785407279/lucid-origin_create_a_curtain_image_for_my_website_category_option_image-0_dsbq3w.jpg" alt="Curtains" class="cat-card__img" /></div>
+          <div class="cat-card__label">Curtains</div>
+        </a>
+        <a href="category.html?cat=cushion-covers" class="cat-card">
+          <div class="cat-card__icon"><img src="https://res.cloudinary.com/drukqssjb/image/upload/v1785407174/CouchCushionCover_1_rlhw5k.jpg" alt="Cushion Covers" class="cat-card__img" /></div>
+          <div class="cat-card__label">Cushion Covers</div>
+        </a>
+        <a href="category.html?cat=pillow-covers" class="cat-card">
+          <div class="cat-card__icon"><img src="https://res.cloudinary.com/drukqssjb/image/upload/v1785407253/CC125_1_b5yu32.jpg" alt="Pillow Covers" class="cat-card__img" /></div>
+          <div class="cat-card__label">Pillow Covers</div>
+        </a>
+        <a href="category.html?cat=throws" class="cat-card">
+          <div class="cat-card__icon"><img src="https://res.cloudinary.com/drukqssjb/image/upload/v1785407565/1_f8ce2b3c-b520-46e0-a220-f8d44034ff51_600x_dggdqa.jpg" alt="Throws" class="cat-card__img" /></div>
+          <div class="cat-card__label">Throws</div>
+        </a>
+        <a href="category.html?cat=table-linen" class="cat-card">
+          <div class="cat-card__icon"><img src="https://res.cloudinary.com/drukqssjb/image/upload/v1785407335/images_gjvacs.jpg" alt="Table Linen" class="cat-card__img" /></div>
+          <div class="cat-card__label">Table Linen</div>
+        </a>
+        <a href="category.html?cat=bath-towels" class="cat-card">
+          <div class="cat-card__icon"><img src="https://res.cloudinary.com/drukqssjb/image/upload/v1785407393/images_oorlou.jpg" alt="Bath Towels" class="cat-card__img" /></div>
+          <div class="cat-card__label">Bath Towels</div>
+        </a>
+        <a href="category.html?cat=comforters" class="cat-card">
+          <div class="cat-card__icon"><img src="https://res.cloudinary.com/drukqssjb/image/upload/v1785407462/81cOJRPhjZL._AC_UF894_1000_QL80__rtccvn.jpg" alt="Comforters" class="cat-card__img" /></div>
+          <div class="cat-card__label">Comforters</div>
+        </a>
+        <a href="category.html?cat=mattress-protectors" class="cat-card">
+          <div class="cat-card__icon"><img src="https://res.cloudinary.com/drukqssjb/image/upload/v1785401495/WhatsApp_Image_2026-07-29_at_14.14.00_1_ae2scu.jpg" alt="Mattress Protectors" class="cat-card__img" /></div>
+          <div class="cat-card__label">Protectors</div>
+        </a>
+      </div>
+    </section>
+
+    <!-- Collections -->
+    <section class="section">
+      <div class="section__header">
+        <h2 class="section__title">Curated Collections</h2>
+      </div>
+      <div class="collection-banner">
+        <div class="collection-card">
+          <div class="collection-card__emoji">🌿</div>
+          <div class="collection-card__title">Earthy Tones</div>
+          <div class="collection-card__desc">Warm terracotta, olive & beige bedsheets and curtains for a natural vibe
+          </div>
+          <a href="#" class="collection-card__link">Shop this look →</a>
+        </div>
+        <div class="collection-card">
+          <div class="collection-card__emoji">🌸</div>
+          <div class="collection-card__title">Floral Dreams</div>
+          <div class="collection-card__desc">Delicate floral prints on 100% cotton — perfect for bedrooms and living
+            rooms</div>
+          <a href="#" class="collection-card__link">Shop this look →</a>
+        </div>
+        <div class="collection-card">
+          <div class="collection-card__emoji">🔲</div>
+          <div class="collection-card__title">Minimal Modern</div>
+          <div class="collection-card__desc">Clean geometric patterns and solid tones for a contemporary home</div>
+          <a href="#" class="collection-card__link">Shop this look →</a>
+        </div>
+        <div class="collection-card">
+          <div class="collection-card__emoji">✨</div>
+          <div class="collection-card__title">Luxury Satin</div>
+          <div class="collection-card__desc">Premium satin-finish bedsheets and pillow covers for a five-star bedroom
+            feel</div>
+          <a href="#" class="collection-card__link">Shop this look →</a>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Products -->
+    <section class="section" id="products">
+      <div class="section__header">
+        <h2 class="section__title">Our Products</h2>
+        <a href="#" class="section__see-all">See all</a>
+      </div>
+
+      <div class="products-grid" id="homeProductsGrid">
+        <!-- Products loaded dynamically from Firestore -->
+      </div>
+    </section>
+
+    <!-- Trust Bar -->
+    <div class="trust-bar">
+      <div class="trust-item">
+        <span class="trust-item__icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="1" y="3" width="15" height="13"/>
+            <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
+            <circle cx="5.5" cy="18.5" r="2.5"/>
+            <circle cx="18.5" cy="18.5" r="2.5"/>
+          </svg>
+        </span>
+        <div class="trust-item__text">
+          <strong>Free Delivery</strong>
+          <span>On orders above ₹499</span>
+        </div>
+      </div>
+      <div class="trust-item">
+        <span class="trust-item__icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="1 4 1 10 7 10"/>
+            <path d="M3.51 15a9 9 0 102.13-9.36L1 10"/>
+          </svg>
+        </span>
+        <div class="trust-item__text">
+          <strong>Easy Returns</strong>
+          <span>7-day return policy</span>
+        </div>
+      </div>
+      <div class="trust-item">
+        <span class="trust-item__icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+            <path d="M7 11V7a5 5 0 0110 0v4"/>
+          </svg>
+        </span>
+        <div class="trust-item__text">
+          <strong>Secure Payments</strong>
+          <span>100% safe checkout</span>
+        </div>
+      </div>
+      <div class="trust-item">
+        <span class="trust-item__icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+          </svg>
+        </span>
+        <div class="trust-item__text">
+          <strong>Premium Quality</strong>
+          <span>Handpicked fabrics</span>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ═══════════ FOOTER ═══════════ -->
+  <footer class="footer">
+    <div class="footer__main">
+      <div class="footer__grid">
+        <div class="footer__col">
+          <div class="footer__col-title">Shop</div>
+          <a href="#">Bedsheets</a>
+          <a href="#">Curtains</a>
+          <a href="#">Cushion Covers</a>
+          <a href="#">Comforters</a>
+          <a href="#">Pillow Covers</a>
+        </div>
+        <div class="footer__col">
+          <div class="footer__col-title">Collections</div>
+          <a href="#">Earthy Tones</a>
+          <a href="#">Floral Dreams</a>
+          <a href="#">Minimal Modern</a>
+          <a href="#">Luxury Satin</a>
+        </div>
+        <div class="footer__col">
+          <div class="footer__col-title">Help</div>
+          <a href="#">Track Order</a>
+          <a href="#">Returns & Exchange</a>
+          <a href="#">Shipping Info</a>
+          <a href="#">FAQs</a>
+        </div>
+        <div class="footer__col">
+          <div class="footer__col-title">About Ferikart</div>
+          <a href="#">Our Story</a>
+          <a href="#">Contact Us</a>
+          <a href="#">Blog</a>
+          <a href="#">Careers</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <div class="footer__logo">
+        <img src="images/logo.png" alt="ferikart" class="footer__logo-img" />
+      </div>
+      <div class="footer__copyright">&copy; 2026 ferikart. All rights reserved. | Chalti firti dukan</div>
+    </div>
+  </footer>
+
+  <script src="js/script.js"></script>
+  <script type="module" src="js/firebase-auth-global.js"></script>
+</body>
+
+</html>

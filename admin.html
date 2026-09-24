@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ferikart — Admin Dashboard. Manage products, categories, and inventory.">
+  <title>ferikart — Admin Panel</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body class="admin-body">
+
+  <!-- ═══════ PAGE NOT FOUND SCREEN (for non-admin users) ═══════ -->
+  <div class="admin-denied" id="adminDenied" style="display:none;">
+    <div class="admin-denied__card">
+      <div class="admin-denied__icon">🔍</div>
+      <h1 class="admin-denied__title">Page Not Found</h1>
+      <p class="admin-denied__text">Unfortunately the page you are looking for has been moved or deleted.</p>
+      <a href="home.html" class="admin-denied__btn">Go to Homepage</a>
+    </div>
+  </div>
+
+  <!-- ═══════ LOADING SPINNER ═══════ -->
+  <div class="admin-loading" id="adminLoading">
+    <div class="admin-loading__spinner"></div>
+    <p>Verifying admin access…</p>
+  </div>
+
+  <!-- ═══════ ADMIN DASHBOARD (hidden until verified) ═══════ -->
+  <div class="admin-dashboard" id="adminDashboard" style="display:none;">
+
+    <!-- ── Sidebar ── -->
+    <aside class="admin-sidebar" id="adminSidebar">
+      <div class="admin-sidebar__header">
+        <a href="home.html" class="admin-sidebar__logo">
+          <img src="images/logo.png" alt="ferikart" class="admin-sidebar__logo-img" />
+        </a>
+        <span class="admin-sidebar__badge">Admin</span>
+      </div>
+
+      <nav class="admin-sidebar__nav">
+        <button class="admin-nav__item active" data-section="dashboard" id="navDashboard">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="7" />
+            <rect x="14" y="3" width="7" height="7" />
+            <rect x="14" y="14" width="7" height="7" />
+            <rect x="3" y="14" width="7" height="7" />
+          </svg>
+          Dashboard
+        </button>
+        <button class="admin-nav__item" data-section="add-product" id="navAddProduct">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10" />
+            <line x1="12" y1="8" x2="12" y2="16" />
+            <line x1="8" y1="12" x2="16" y2="12" />
+          </svg>
+          Add Product
+        </button>
+        <button class="admin-nav__item" data-section="manage-products" id="navManageProducts">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <path d="M16 10a4 4 0 01-8 0" />
+          </svg>
+          Manage Products
+        </button>
+        <button class="admin-nav__item" data-section="manage-admins" id="navManageAdmins">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+            <circle cx="9" cy="7" r="4" />
+            <path d="M23 21v-2a4 4 0 00-3-3.87" />
+            <path d="M16 3.13a4 4 0 010 7.75" />
+          </svg>
+          Admin Roles
+        </button>
+      </nav>
+
+      <div class="admin-sidebar__footer">
+        <div class="admin-sidebar__user">
+          <div class="admin-sidebar__avatar" id="adminAvatar">A</div>
+          <div class="admin-sidebar__user-info">
+            <span class="admin-sidebar__user-name" id="adminName">Admin</span>
+            <span class="admin-sidebar__user-email" id="adminEmail">Loading...</span>
+          </div>
+        </div>
+        <a href="home.html" class="admin-sidebar__back-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 12H5" />
+            <polyline points="12 19 5 12 12 5" />
+          </svg>
+          Back to Store
+        </a>
+      </div>
+    </aside>
+
+    <!-- ── Mobile Top Bar ── -->
+    <div class="admin-topbar" id="adminTopbar">
+      <button class="admin-topbar__toggle" id="sidebarToggle" aria-label="Toggle menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="6" x2="21" y2="6" />
+          <line x1="3" y1="12" x2="21" y2="12" />
+          <line x1="3" y1="18" x2="21" y2="18" />
+        </svg>
+      </button>
+      <img src="images/logo.png" alt="ferikart" class="admin-topbar__logo" />
+      <span class="admin-sidebar__badge">Admin</span>
+    </div>
+
+    <!-- ── Main Content ── -->
+    <main class="admin-main" id="adminMain">
+
+      <!-- ═══════ SECTION: Dashboard ═══════ -->
+      <section class="admin-section active" id="sectionDashboard">
+        <div class="admin-section__header">
+          <h1 class="admin-section__title">Dashboard</h1>
+          <p class="admin-section__subtitle">Overview of your product catalog</p>
+        </div>
+
+        <div class="admin-stats-grid">
+          <div class="admin-stat-card admin-stat-card--products">
+            <div class="admin-stat-card__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
+                <line x1="3" y1="6" x2="21" y2="6" />
+                <path d="M16 10a4 4 0 01-8 0" />
+              </svg>
+            </div>
+            <div class="admin-stat-card__info">
+              <span class="admin-stat-card__value" id="statTotalProducts">—</span>
+              <span class="admin-stat-card__label">Total Products</span>
+            </div>
+          </div>
+          <div class="admin-stat-card admin-stat-card--categories">
+            <div class="admin-stat-card__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="7" height="7" />
+                <rect x="14" y="3" width="7" height="7" />
+                <rect x="14" y="14" width="7" height="7" />
+                <rect x="3" y="14" width="7" height="7" />
+              </svg>
+            </div>
+            <div class="admin-stat-card__info">
+              <span class="admin-stat-card__value" id="statCategories">—</span>
+              <span class="admin-stat-card__label">Categories</span>
+            </div>
+          </div>
+          <div class="admin-stat-card admin-stat-card--recent">
+            <div class="admin-stat-card__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18.36 6.64a9 9 0 11-12.73 0" />
+                <line x1="12" y1="2" x2="12" y2="12" />
+              </svg>
+            </div>
+            <div class="admin-stat-card__info">
+              <span class="admin-stat-card__value" id="statOutOfStock">—</span>
+              <span class="admin-stat-card__label">Out of Stock</span>
+            </div>
+          </div>
+          <div class="admin-stat-card admin-stat-card--value">
+            <div class="admin-stat-card__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" y1="1" x2="12" y2="23" />
+                <path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6" />
+              </svg>
+            </div>
+            <div class="admin-stat-card__info">
+              <span class="admin-stat-card__value" id="statAvgPrice">—</span>
+              <span class="admin-stat-card__label">Avg. Price</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Products Quick Table -->
+        <div class="admin-card">
+          <div class="admin-card__header">
+            <h2 class="admin-card__title">Recently Added Products</h2>
+            <button class="admin-card__action-btn" id="goToManageBtn">View All →</button>
+          </div>
+          <div class="admin-table-wrap">
+            <table class="admin-table" id="recentProductsTable">
+              <thead>
+                <tr>
+                  <th>Image</th>
+                  <th>Product Name</th>
+                  <th>Category</th>
+                  <th>Price</th>
+                  <th>MRP</th>
+                  <th>Discount</th>
+                </tr>
+              </thead>
+              <tbody id="recentProductsBody">
+                <tr>
+                  <td colspan="6" class="admin-table__empty">Loading products…</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════ SECTION: Add Product ═══════ -->
+      <section class="admin-section" id="sectionAddProduct">
+        <div class="admin-section__header">
+          <h1 class="admin-section__title" id="addProductTitle">Add New Product</h1>
+          <p class="admin-section__subtitle" id="addProductSubtitle">Fill in the details to add a new product to the
+            catalog</p>
+        </div>
+
+        <form class="admin-form" id="addProductForm" novalidate>
+          <input type="hidden" id="editProductId" value="">
+
+          <div class="admin-form__grid">
+            <!-- Left Column -->
+            <div class="admin-form__col">
+
+              <div class="admin-form__card">
+                <h3 class="admin-form__card-title">Basic Information</h3>
+
+                <div class="admin-form-group">
+                  <label for="productTitle" class="admin-form-label">Product Title <span
+                      class="required">*</span></label>
+                  <input type="text" id="productTitle" class="admin-form-input"
+                    placeholder="e.g. 300 TC Egyptian Cotton Double Bedsheet — Ivory" required />
+                </div>
+
+                <div class="admin-form-row">
+                  <div class="admin-form-group">
+                    <label for="productCategory" class="admin-form-label">Category <span
+                        class="required">*</span></label>
+                    <select id="productCategory" class="admin-form-select" required>
+                      <option value="">Select category</option>
+                      <option value="bedsheets">Bedsheets</option>
+                      <option value="curtains">Curtains</option>
+                      <option value="cushion-covers">Cushion Covers</option>
+                      <option value="pillow-covers">Pillow Covers</option>
+                      <option value="comforters">Comforters</option>
+                      <option value="throws">Throws & Blankets</option>
+                      <option value="table-linen">Table Linen</option>
+                      <option value="bath-towels">Bath Towels</option>
+                      <option value="mattress-protectors">Mattress Protectors</option>
+                    </select>
+                  </div>
+                  <div class="admin-form-group">
+                    <label for="productSubCategory" class="admin-form-label">Sub-Category</label>
+                    <input type="text" id="productSubCategory" class="admin-form-input"
+                      placeholder="e.g. Egyptian Cotton, Blackout" />
+                  </div>
+                </div>
+
+                <div class="admin-form-group">
+                  <label for="productDescription" class="admin-form-label">Description <span
+                      class="required">*</span></label>
+                  <textarea id="productDescription" class="admin-form-textarea" rows="4"
+                    placeholder="Detailed product description…" required></textarea>
+                </div>
+              </div>
+
+              <div class="admin-form__card">
+                <h3 class="admin-form__card-title">Pricing</h3>
+                <div class="admin-form-row admin-form-row--3">
+                  <div class="admin-form-group">
+                    <label for="productPrice" class="admin-form-label">Selling Price (₹) <span
+                        class="required">*</span></label>
+                    <input type="number" id="productPrice" class="admin-form-input" placeholder="1299" min="0"
+                      required />
+                  </div>
+                  <div class="admin-form-group">
+                    <label for="productMRP" class="admin-form-label">MRP (₹) <span class="required">*</span></label>
+                    <input type="number" id="productMRP" class="admin-form-input" placeholder="2999" min="0" required />
+                  </div>
+                  <div class="admin-form-group">
+                    <label for="productDiscount" class="admin-form-label">Discount</label>
+                    <input type="text" id="productDiscount" class="admin-form-input" placeholder="Auto-calculated"
+                      readonly />
+                  </div>
+                </div>
+              </div>
+
+              <div class="admin-form__card">
+                <h3 class="admin-form__card-title">Specifications</h3>
+                <div class="admin-form-row">
+                  <div class="admin-form-group">
+                    <label for="productFabric" class="admin-form-label">Fabric / Material</label>
+                    <input type="text" id="productFabric" class="admin-form-input"
+                      placeholder="e.g. 100% Egyptian Cotton (300 TC)" />
+                  </div>
+                  <div class="admin-form-group">
+                    <label for="productPattern" class="admin-form-label">Pattern / Design</label>
+                    <input type="text" id="productPattern" class="admin-form-input" placeholder="e.g. Floral Print" />
+                  </div>
+                </div>
+                <div class="admin-form-row">
+                  <div class="admin-form-group">
+                    <label for="productDimensions" class="admin-form-label">Dimensions</label>
+                    <input type="text" id="productDimensions" class="admin-form-input"
+                      placeholder="e.g. 228 cm x 254 cm" />
+                  </div>
+                  <div class="admin-form-group">
+                    <label for="productPillowSize" class="admin-form-label">Pillow / Extra Size</label>
+                    <input type="text" id="productPillowSize" class="admin-form-input"
+                      placeholder="e.g. 46 cm x 69 cm" />
+                  </div>
+                </div>
+                <div class="admin-form-group">
+                  <label for="productCare" class="admin-form-label">Care Instructions</label>
+                  <input type="text" id="productCare" class="admin-form-input"
+                    placeholder="e.g. Machine wash cold. Do not bleach." />
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="admin-form__col">
+
+              <div class="admin-form__card">
+                <h3 class="admin-form__card-title">Product Image</h3>
+
+                <!-- Image Upload Zone -->
+                <div class="admin-upload-zone" id="uploadZone">
+                  <div class="admin-upload-zone__content" id="uploadZoneContent">
+                    <svg class="admin-upload-zone__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                      <circle cx="8.5" cy="8.5" r="1.5" />
+                      <polyline points="21 15 16 10 5 21" />
+                    </svg>
+                    <p class="admin-upload-zone__text">Drag & drop an image here</p>
+                    <p class="admin-upload-zone__hint">or click to browse • PNG, JPG, WebP (max 5MB)</p>
+                    <input type="file" id="productImageFile" accept="image/*" class="admin-upload-zone__input" />
+                  </div>
+                  <!-- Preview (hidden by default) -->
+                  <div class="admin-upload-zone__preview" id="uploadPreview" style="display:none;">
+                    <img id="uploadPreviewImg" alt="Preview" />
+                    <button type="button" class="admin-upload-zone__remove" id="removeImageBtn"
+                      aria-label="Remove image">✕</button>
+                  </div>
+                  <!-- Upload progress bar -->
+                  <div class="admin-upload-progress" id="uploadProgress" style="display:none;">
+                    <div class="admin-upload-progress__bar" id="uploadProgressBar"></div>
+                    <span class="admin-upload-progress__text" id="uploadProgressText">0%</span>
+                  </div>
+                </div>
+
+                <div class="admin-form-divider">
+                  <span>OR</span>
+                </div>
+
+                <div class="admin-form-group">
+                  <label for="productImageURL" class="admin-form-label">Paste Image URL</label>
+                  <input type="url" id="productImageURL" class="admin-form-input"
+                    placeholder="https://res.cloudinary.com/... or any image URL" />
+                </div>
+                <div class="admin-url-preview" id="urlPreview" style="display:none;">
+                  <img id="urlPreviewImg" alt="URL Preview" />
+                </div>
+              </div>
+
+              <div class="admin-form__card">
+                <h3 class="admin-form__card-title">Sizes & Badge</h3>
+
+                <div class="admin-form-group">
+                  <label class="admin-form-label">Available Sizes</label>
+                  <div class="admin-tags-input" id="sizesTagsInput">
+                    <div class="admin-tags-container" id="sizesTagsContainer"></div>
+                    <input type="text" class="admin-tags-input__field" id="sizesInput"
+                      placeholder="Type size & press Enter (e.g. Single, Double, King)" />
+                  </div>
+                  <div class="admin-form-hint">Press Enter or comma to add a size. Click × to remove.</div>
+                </div>
+
+                <div class="admin-form-group">
+                  <label class="admin-form-label">Stock Availability</label>
+                  <label class="admin-stock-toggle">
+                    <input type="checkbox" id="productInStock" checked />
+                    <span class="admin-stock-toggle__slider"></span>
+                    <span class="admin-stock-toggle__label" id="stockToggleLabel">In Stock</span>
+                  </label>
+                </div>
+
+                <div class="admin-form-group">
+                  <label for="productBadge" class="admin-form-label">Badge</label>
+                  <select id="productBadge" class="admin-form-select">
+                    <option value="">None</option>
+                    <option value="New">New</option>
+                    <option value="10% Off">10% Off</option>
+                    <option value="20% Off">20% Off</option>
+                    <option value="30% Off">30% Off</option>
+                    <option value="40% Off">40% Off</option>
+                    <option value="50% Off">50% Off</option>
+                    <option value="Bestseller">Bestseller</option>
+                    <option value="Limited">Limited Edition</option>
+                  </select>
+                </div>
+
+                <div class="admin-form-group">
+                  <label for="productRating" class="admin-form-label">Rating Display</label>
+                  <input type="text" id="productRating" class="admin-form-input"
+                    placeholder="e.g. ★★★★★ (2,847 reviews)" />
+                </div>
+              </div>
+
+              <!-- Submit Button -->
+              <div class="admin-form__actions">
+                <button type="button" class="admin-btn admin-btn--secondary" id="resetFormBtn">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="1 4 1 10 7 10" />
+                    <path d="M3.51 15a9 9 0 102.13-9.36L1 10" />
+                  </svg>
+                  Reset
+                </button>
+                <button type="submit" class="admin-btn admin-btn--primary" id="submitProductBtn">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                  <span id="submitBtnText">Add Product</span>
+                  <span class="admin-btn__spinner" id="submitSpinner" style="display:none;"></span>
+                </button>
+              </div>
+
+            </div>
+          </div>
+        </form>
+      </section>
+
+      <!-- ═══════ SECTION: Manage Products ═══════ -->
+      <section class="admin-section" id="sectionManageProducts">
+        <div class="admin-section__header">
+          <h1 class="admin-section__title">Manage Products</h1>
+          <p class="admin-section__subtitle">View, edit, or delete products from your catalog</p>
+        </div>
+
+        <!-- Filters -->
+        <div class="admin-filters">
+          <div class="admin-filters__search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+            <input type="text" id="manageSearchInput" class="admin-filters__input" placeholder="Search products…" />
+          </div>
+          <select id="manageCategoryFilter" class="admin-form-select admin-filters__select">
+            <option value="">All Categories</option>
+            <option value="bedsheets">Bedsheets</option>
+            <option value="curtains">Curtains</option>
+            <option value="cushion-covers">Cushion Covers</option>
+            <option value="pillow-covers">Pillow Covers</option>
+            <option value="comforters">Comforters</option>
+            <option value="throws">Throws & Blankets</option>
+            <option value="table-linen">Table Linen</option>
+            <option value="bath-towels">Bath Towels</option>
+            <option value="mattress-protectors">Mattress Protectors</option>
+          </select>
+        </div>
+
+        <!-- Products Table -->
+        <div class="admin-card">
+          <div class="admin-table-wrap">
+            <table class="admin-table" id="manageProductsTable">
+              <thead>
+                <tr>
+                  <th>Image</th>
+                  <th>Product Name</th>
+                  <th>Category</th>
+                  <th>Price</th>
+                  <th>MRP</th>
+                  <th>Sizes</th>
+                  <th>Badge</th>
+                  <th>Stock</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="manageProductsBody">
+                <tr>
+                  <td colspan="9" class="admin-table__empty">Loading products…</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════ SECTION: MANAGE ADMINS ═══════════ -->
+      <section class="admin-section" id="sectionManageAdmins" style="display:none;">
+        <div class="admin-header">
+          <h1 class="admin-header__title">Admin Roles &amp; Permissions</h1>
+          <p class="admin-header__subtitle">Manage authorized admin email addresses stored in Firestore Database</p>
+        </div>
+
+        <div class="admin-card" style="max-width: 650px;">
+          <h2 class="admin-card__title" style="font-size: 16px; margin-bottom: 16px;">Add Authorized Admin Email</h2>
+          <div style="display: flex; gap: 12px; margin-bottom: 24px;">
+            <input type="email" id="newAdminEmailInput" class="admin-input" placeholder="admin@example.com"
+              style="flex: 1;" />
+            <button type="button" class="admin-btn admin-btn--primary" id="addAdminEmailBtn"
+              style="white-space: nowrap;">+ Add Admin</button>
+          </div>
+
+          <h3 class="admin-card__title" style="font-size: 14px; color: var(--gray-600); margin-bottom: 12px;">Current
+            Admin Emails in Firestore DB:</h3>
+          <div id="adminEmailsList" style="display: flex; flex-direction: column; gap: 10px;">
+            <div style="padding: 12px; text-align: center; color: var(--gray-500);">Loading admin emails from DB…</div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ═══════ TOAST NOTIFICATION ═══════ -->
+  <div class="admin-toast" id="adminToast">
+    <div class="admin-toast__icon" id="toastIcon">✓</div>
+    <span class="admin-toast__message" id="toastMessage">Product added successfully!</span>
+  </div>
+
+  <!-- ═══════ DELETE CONFIRM MODAL ═══════ -->
+  <div class="admin-modal-overlay" id="deleteModal" style="display:none;">
+    <div class="admin-modal">
+      <div class="admin-modal__icon">🗑️</div>
+      <h2 class="admin-modal__title">Delete Product?</h2>
+      <p class="admin-modal__text">This action cannot be undone. The product will be permanently removed from Database.
+      </p>
+      <div class="admin-modal__actions">
+        <button class="admin-btn admin-btn--secondary" id="cancelDeleteBtn">Cancel</button>
+        <button class="admin-btn admin-btn--danger" id="confirmDeleteBtn">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="js/admin.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ferikart — Manage Delivery Addresses">
+  <title>Manage Addresses — Ferikart</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+  <!-- ═══════════ NAVBAR ═══════════ -->
+  <nav class="navbar" id="navbar">
+    <a href="home.html" class="navbar__logo" aria-label="ferikart Home">
+      <img src="images/logo.png" alt="ferikart logo" class="navbar__logo-img" />
+    </a>
+    <div class="navbar__actions" id="navActions">
+      <a href="account-settings.html" class="btn btn--secondary" style="padding: 8px 16px; font-size: 13px; white-space: nowrap;">← Back to My Account</a>
+      <button class="cart-btn" id="cartBtn" aria-label="Shopping cart">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <circle cx="9" cy="21" r="1" />
+          <circle cx="20" cy="21" r="1" />
+          <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6" />
+        </svg>
+        <span class="cart-btn__badge" id="cartBadge">0</span>
+        <span class="cart-btn__label">Cart</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ═══════════ PAGE CONTENT ═══════════ -->
+  <div class="account-page">
+    <div class="account-page__header">
+      <a href="account-settings.html" class="category-back-btn" aria-label="Go back">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+          stroke-linecap="round" stroke-linejoin="round">
+          <line x1="19" y1="12" x2="5" y2="12" />
+          <polyline points="12 19 5 12 12 5" />
+        </svg>
+      </a>
+      <h1 class="account-page__title">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: sub; margin-right: 6px;">
+          <path d="M12 21s-6-5.333-6-10a6 6 0 0112 0c0 4.667-6 10-6 10z"/>
+          <circle cx="12" cy="11" r="2.5"/>
+        </svg> Manage Delivery Addresses
+      </h1>
+    </div>
+
+    <!-- Notification Toast Banner -->
+    <div class="account-toast" id="accountToast" role="alert" style="display: none;">
+      <span class="account-toast__icon">✓</span>
+      <span id="accountToastMsg">Address updated successfully!</span>
+    </div>
+
+    <!-- Main Addresses Card Only -->
+    <div class="account-card">
+      <div class="account-card__header account-card__header--flex">
+        <div>
+          <h2 class="account-card__title">Saved Shipping Addresses</h2>
+          <p class="account-card__subtitle">Add, edit, or set default delivery addresses for doorstep trials and orders.</p>
+        </div>
+        <button class="btn btn--primary btn--sm" id="addNewAddressBtn">
+          + Add New Address
+        </button>
+      </div>
+
+      <!-- Addresses List Container -->
+      <div class="address-list" id="addressListContainer">
+        <!-- Dynamically populated by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════ ADDRESS MODAL (ADD / EDIT) ═══════════ -->
+  <div class="modal-overlay" id="addressModal" style="display: none;">
+    <div class="modal-card">
+      <div class="modal-card__header">
+        <h3 class="modal-card__title" id="addressModalTitle">Add New Address</h3>
+        <button class="modal-close-btn" id="closeAddressModalBtn" aria-label="Close modal">&times;</button>
+      </div>
+
+      <form id="addressForm" class="account-form">
+        <input type="hidden" id="addressId" value="" />
+
+        <div class="form-group">
+          <label class="form-label">Address Type</label>
+          <div class="address-type-selector">
+            <label class="address-type-label">
+              <input type="radio" name="addressType" value="Home" checked /> Home
+            </label>
+            <label class="address-type-label">
+              <input type="radio" name="addressType" value="Work" /> Work
+            </label>
+            <label class="address-type-label">
+              <input type="radio" name="addressType" value="Other" /> Other
+            </label>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="addrFullName" class="form-label">Full Name</label>
+            <input type="text" id="addrFullName" class="form-input" placeholder="Recipient Name" required />
+          </div>
+          <div class="form-group">
+            <label for="addrPhone" class="form-label">Mobile Phone Number</label>
+            <div class="phone-input-group">
+              <span class="phone-prefix">+91</span>
+              <input type="tel" id="addrPhone" class="form-input" placeholder="10-digit number" maxlength="10" required />
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="addrPincode" class="form-label">Pincode</label>
+            <input type="text" id="addrPincode" class="form-input" placeholder="6-digit Pincode" maxlength="6" required />
+          </div>
+          <div class="form-group">
+            <label for="addrCity" class="form-label">City / District</label>
+            <input type="text" id="addrCity" class="form-input" placeholder="e.g. New Delhi" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="addrStreet" class="form-label">Flat, House No., Building, Street Address</label>
+          <input type="text" id="addrStreet" class="form-input" placeholder="e.g. 123 Green Park Extension" required />
+        </div>
+
+        <div class="form-group">
+          <label for="addrState" class="form-label">State</label>
+          <input type="text" id="addrState" class="form-input" placeholder="e.g. Delhi" required />
+        </div>
+
+        <div class="form-group">
+          <label class="form-checkbox-label">
+            <input type="checkbox" id="addrIsDefault" />
+            Make this my default shipping address
+          </label>
+        </div>
+
+        <div class="modal-card__footer">
+          <button type="button" class="btn btn--secondary" id="cancelAddressBtn">Cancel</button>
+          <button type="submit" class="btn btn--primary" id="saveAddressBtn">Save Address</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ═══════════ FOOTER ═══════════ -->
+  <footer class="footer">
+    <div class="footer__bottom">
+      <p>© 2026 ferikart™ — Chalti firti dukan. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- ═══════════ SUCCESS POPUP MODAL ═══════════ -->
+  <div class="popup-modal-overlay" id="successPopupModal" style="display: none;">
+    <div class="popup-modal-card">
+      <div class="popup-modal-icon">✓</div>
+      <h3 class="popup-modal-title" id="popupModalTitle">Address Saved</h3>
+      <p class="popup-modal-text" id="popupModalText">Your delivery address has been saved successfully.</p>
+      <button class="popup-modal-btn" id="closePopupModalBtn">OK</button>
+    </div>
+  </div>
+
+  <script src="js/script.js"></script>
+  <script type="module" src="js/firebase-auth-global.js"></script>
+</body>
+
+</html>
